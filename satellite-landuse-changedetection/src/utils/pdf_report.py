@@ -34,10 +34,20 @@ def generate_pdf_report(
     pdf.set_font("Helvetica", "", 11)
     pdf.ln(4)
 
-    # Side-by-side T1/T2 images
-    pdf.image(t1_path, x=10, y=pdf.get_y(), w=85)
-    pdf.image(t2_path, x=105, y=pdf.get_y(), w=85)
-    pdf.ln(65)
+    # Side-by-side T1/T2 images -- compute actual rendered height from each
+    # image's real aspect ratio instead of guessing a fixed gap, which is
+    # what caused the caption text to overlap the image before.
+    img_w = 85
+    t1_w_px, t1_h_px = Image.open(t1_path).size
+    t2_w_px, t2_h_px = Image.open(t2_path).size
+    t1_h_mm = img_w * (t1_h_px / t1_w_px)
+    t2_h_mm = img_w * (t2_h_px / t2_w_px)
+    max_h_mm = max(t1_h_mm, t2_h_mm)
+
+    start_y = pdf.get_y()
+    pdf.image(t1_path, x=10, y=start_y, w=img_w)
+    pdf.image(t2_path, x=105, y=start_y, w=img_w)
+    pdf.set_y(start_y + max_h_mm + 4)
 
     pdf.set_font("Helvetica", "B", 12)
     pdf.cell(95, 8, "Before (T1)", align="C")
