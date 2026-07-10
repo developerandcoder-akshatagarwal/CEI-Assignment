@@ -30,7 +30,7 @@ def generate_pdf_report(
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Helvetica", "B", 16)
-    pdf.cell(0, 10, "Satellite Change Detection — Analysis Report", ln=True)
+    pdf.cell(0, 10, "Satellite Change Detection - Analysis Report", ln=True)
     pdf.set_font("Helvetica", "", 11)
     pdf.ln(4)
 
