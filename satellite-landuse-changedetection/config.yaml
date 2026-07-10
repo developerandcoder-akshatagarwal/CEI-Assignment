@@ -1,0 +1,50 @@
+seed: 42
+
+paths:
+  data_raw: data/raw
+  data_processed: data/processed
+  checkpoints: checkpoints
+  outputs: outputs
+
+data:
+  eurosat_classes:
+    - AnnualCrop
+    - Forest
+    - HerbaceousVegetation
+    - Highway
+    - Industrial
+    - Pasture
+    - PermanentCrop
+    - Residential
+    - River
+    - SeaLake
+  image_size: 64
+  batch_size: 64
+  num_workers: 2
+  val_fraction: 0.15
+  test_fraction: 0.15
+
+training:
+  baseline:
+    epochs: 8
+    lr: 0.001
+  phase1:
+    epochs: 3
+    lr: 0.001
+  phase2:
+    epochs: 5
+    lr_head: 0.001
+    lr_backbone: 0.0001
+    unfreeze_layers: [layer3, layer4]
+
+change_detection:
+  num_regions: 12
+  change_fraction: 0.3        # fraction of pairs that get a synthetic class swap to create "changed" ground truth
+
+dashboard:
+  # thresholds are placeholders — Day 5 will overwrite these with the
+  # ROC/Youden's-J-selected values once the real similarity distribution exists
+  risk_thresholds:
+    stable_min: 0.85    # similarity >= this -> green (stable)
+    moderate_min: 0.65  # similarity >= this (but < stable_min) -> yellow (moderate)
+                         # similarity < moderate_min -> red (significant change)
