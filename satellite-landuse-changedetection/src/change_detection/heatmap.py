@@ -63,6 +63,6 @@ def overlay_heatmap_on_image(base_image_np, sim_grid, alpha=0.45):
     h, w = base_image_np.shape[:2]
     change_intensity = 1 - sim_grid
     heat_resized = cv2.resize(change_intensity.astype(np.float32), (w, h), interpolation=cv2.INTER_LINEAR)
-    heat_colored = (cm.get_cmap("RdYlGn_r")(heat_resized)[:, :, :3] * 255).astype(np.uint8)
+    heat_colored = (plt.get_cmap("RdYlGn_r")(heat_resized)[:, :, :3] * 255).astype(np.uint8)
     blended = cv2.addWeighted(base_image_np, 1 - alpha, heat_colored, alpha, 0)
     return blended
