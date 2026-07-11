@@ -7,7 +7,7 @@ Change heatmap generation. Two modes:
      overlay blended onto the T1 image for a more visual dashboard result.
 """
 import numpy as np
-import cv2
+from PIL import Image
 import torch
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
@@ -62,7 +62,12 @@ def overlay_heatmap_on_image(base_image_np, sim_grid, alpha=0.45):
     Returns an (H, W, 3) uint8 blended overlay for dashboard display."""
     h, w = base_image_np.shape[:2]
     change_intensity = 1 - sim_grid
-    heat_resized = cv2.resize(change_intensity.astype(np.float32), (w, h), interpolation=cv2.INTER_LINEAR)
+    heat_resized = np.array(
+        Image.fromarray(change_intensity.astype(np.float32), mode="F").resize((w, h), Image.BILINEAR)
+    )
+    # plt.get_cmap works across old and new matplotlib versions;
+    # matplotlib.cm.get_cmap was removed in 3.9+, which would otherwise
+    # break this the moment a real image gets uploaded on a fresh install.
     heat_colored = (plt.get_cmap("RdYlGn_r")(heat_resized)[:, :, :3] * 255).astype(np.uint8)
-    blended = cv2.addWeighted(base_image_np, 1 - alpha, heat_colored, alpha, 0)
+    blended = (base_image_np.astype(np.float32) * (1 - alpha) + heat_colored.astype(np.float32) * alpha).astype(np.uint8)
     return blended

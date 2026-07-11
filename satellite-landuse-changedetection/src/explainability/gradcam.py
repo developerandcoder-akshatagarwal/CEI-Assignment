@@ -6,7 +6,6 @@ information is already collapsed by then.
 """
 import numpy as np
 import torch
-import cv2
 from pytorch_grad_cam import GradCAM
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
 from pytorch_grad_cam.utils.image import show_cam_on_image
