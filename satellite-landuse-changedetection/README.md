@@ -119,7 +119,7 @@ final report. See `submission/` for the report and demo video.
 
 - 📄 Full report: `submission/Satellite_LandUse_Report.pdf`
 - 🎥 Demo video: `submission/demo_video.mp4` (or linked here if hosted externally instead)
-- 🚀 Live dashboard: https://cei-assignment-rddp8htjwpywnlamdybv9c.streamlit.app/
+- 🚀 Live dashboard: https://cei-assignment-bacehmebyzbrsrsabd4vcl.streamlit.app/
 
 ## Git setup
 

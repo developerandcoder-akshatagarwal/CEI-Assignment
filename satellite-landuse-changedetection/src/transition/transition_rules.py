@@ -5,23 +5,23 @@ together rather than as separate modules per the roadmap decision:
   2. transition_note()   -> plausibility note for a (class_t1, class_t2) pair
   3. generate_explanation() -> the human-readable narrative combining both
 
-All of this is explicitly RULE-BASED / TEMPLATED — no learned model, no
+All of this is explicitly RULE-BASED / TEMPLATED - no learned model, no
 LLM. Label it that way in the report; don't call it "AI-generated."
 """
 
-# A small, illustrative plausibility table. Extend as needed — this is
+# A small, illustrative plausibility table. Extend as needed - this is
 # intentionally not exhaustive, since exhaustive coverage of all 10x10
 # class-pair combinations adds little value over the illustrative cases
 # most likely to come up in a EuroSAT demo.
 TRANSITION_PLAUSIBILITY = {
-    ("Forest", "Residential"): "common — consistent with urban expansion into vegetated land",
-    ("Forest", "Industrial"): "common — consistent with land clearing for development",
-    ("AnnualCrop", "Residential"): "common — consistent with agricultural land converted to housing",
-    ("Pasture", "Residential"): "common — consistent with suburban expansion",
-    ("Residential", "Forest"): "uncommon — would imply land reverting to vegetation, verify manually",
-    ("SeaLake", "Highway"): "implausible — flag for manual review, likely a misclassification",
-    ("SeaLake", "Residential"): "implausible — flag for manual review, likely a misclassification",
-    ("River", "Industrial"): "possible — consistent with riverside industrial development",
+    ("Forest", "Residential"): "common - consistent with urban expansion into vegetated land",
+    ("Forest", "Industrial"): "common - consistent with land clearing for development",
+    ("AnnualCrop", "Residential"): "common - consistent with agricultural land converted to housing",
+    ("Pasture", "Residential"): "common - consistent with suburban expansion",
+    ("Residential", "Forest"): "uncommon - would imply land reverting to vegetation, verify manually",
+    ("SeaLake", "Highway"): "implausible - flag for manual review, likely a misclassification",
+    ("SeaLake", "Residential"): "implausible - flag for manual review, likely a misclassification",
+    ("River", "Industrial"): "possible - consistent with riverside industrial development",
 }
 
 
@@ -40,12 +40,12 @@ def transition_note(class_t1, class_t2):
         return "No class change detected between T1 and T2."
     note = TRANSITION_PLAUSIBILITY.get((class_t1, class_t2))
     if note is None:
-        note = "no specific pattern on record for this class pair — treat as a general land-use change"
+        note = "no specific pattern on record for this class pair - treat as a general land-use change"
     return note
 
 
 def generate_explanation(class_t1, class_t2, similarity, stable_min=0.85, moderate_min=0.65):
-    """Builds the dashboard-facing narrative. Templated, not generative —
+    """Builds the dashboard-facing narrative. Templated, not generative -
     see module docstring."""
     risk = risk_level(similarity, stable_min, moderate_min)
     note = transition_note(class_t1, class_t2)
