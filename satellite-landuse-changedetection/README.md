@@ -49,9 +49,9 @@ python -m src.training.train_phase1
 # 3. Phase 2: unfreeze layer3+layer4, discriminative LR
 python -m src.training.train_phase2
 
-# 4. Run the notebooks in notebooks/ for evaluation, spatial leakage,
-#    UC Merced holdout, change detection, GradCAM, and error analysis
-#    (notebooks are the next thing to build — see Next Steps)
+# 4. Run the notebooks in notebooks/ (or the equivalent scripts in
+#    scripts/) for evaluation, spatial leakage, UC Merced holdout,
+#    change detection, GradCAM, and error analysis
 
 # 5. Launch the dashboard (needs step 3's checkpoint to exist)
 streamlit run dashboard/app.py
@@ -132,7 +132,7 @@ tests/             - smoke tests, run before every commit
 ```bash
 git init
 git add .
-git commit -m "Initial scaffold: data pipeline, models, training, evaluation, dashboard"
+git commit -m "Satellite land-use classifier and change detection - complete project"
 git remote add origin <your-repo-url>
 git push -u origin main
 ```
