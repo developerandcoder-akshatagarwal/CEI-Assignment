@@ -54,25 +54,6 @@ streamlit run dashboard/app.py
 python -m pytest tests/test_smoke.py -v
 ```
 
-## Rough time estimates (GPU: Colab T4 or better)
-
-| Task | Estimated time |
-|---|---|
-| EuroSAT download (auto) | 5-10 min |
-| UC Merced manual download + extract | 10-20 min |
-| Baseline CNN training | 20-40 min |
-| Phase 1 (frozen backbone, 3 epochs) | 10-20 min |
-| Phase 2 (unfrozen, 5 epochs) | 20-40 min |
-| Evaluation notebooks (F1, confusion matrix, UC Merced, leakage) | 1-2 hrs |
-| Change detection (pairs, ROC, heatmaps) | 1-2 hrs |
-| GradCAM integration/testing | 30-60 min |
-| Dashboard testing end-to-end | 1-2 hrs |
-| Report writing | 3-4 hrs |
-| Demo video recording | 30-60 min |
-
-These are compute + implementation estimates, not including debugging
-time — budget extra slack, especially on your first GPU session.
-
 ## Architecture
 
 See `config.yaml` for all hyperparameters and paths in one place —
@@ -112,14 +93,33 @@ tests/             - smoke tests, run before every commit
    pairs by pairing same-class vs different-class tiles, purely to make
    ROC-curve evaluation possible.
 
-## Next steps (not yet built)
+## Project Status
 
-- `notebooks/*.ipynb` — the 8 evaluation notebooks (EDA, ablation
-  table, UC Merced eval, spatial leakage, change detection, GradCAM,
-  error analysis)
-- Actually running training and populating `checkpoints/` with real weights
-- Populating `outputs/` with real figures once training has run
-- The written report and demo video
+All mandatory deliverables are complete with real trained results:
+baseline CNN (macro-F1 0.8999), two-phase fine-tuned ResNet18 (macro-F1
+0.9500), UC Merced holdout evaluation, spatial leakage experiment,
+change detection (AUC 0.9902), error analysis, live dashboard, and
+final report. See `submission/` for the report and demo video.
+
+## Bonus Tasks Attempted
+
+| Bonus | Status | Where to see it |
+|---|---|---|
+| A — GradCAM explainability | ✅ Implemented | `src/explainability/gradcam.py`, dashboard, demo video |
+| B — Multi-threshold toggle | ❌ Not attempted | — |
+| C — Embedding visualization (t-SNE/UMAP) | ❌ Not attempted | — |
+| D — Class-imbalance experiment | ❌ Not attempted | — |
+
+**Additional differentiators (not on the official bonus list, included for presentation quality):**
+- Risk indicator (green/yellow/red, derived from the ROC-selected similarity threshold)
+- Templated change-explanation narrative (rule-based, explicitly not AI-generated — see dashboard and Section 8.3 of the report)
+- Downloadable PDF analysis report, generated on-demand from the dashboard
+
+## Submission
+
+- 📄 Full report: `submission/Satellite_LandUse_Report.pdf`
+- 🎥 Demo video: `submission/demo_video.mp4` (or linked here if hosted externally instead)
+- 🚀 Live dashboard: https://cei-assignment-rddp8htjwpywnlamdybv9c.streamlit.app/
 
 ## Git setup
 
